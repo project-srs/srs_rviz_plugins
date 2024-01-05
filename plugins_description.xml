@@ -1,0 +1,8 @@
+<library path="srs_rviz_plugins">
+  <class name="srs_rviz_plugins/JoyPanel" type="srs_rviz_plugins::JoyPanel" base_class_type="rviz_common::Panel">
+    <description>joy panel</description>
+  </class>
+  <class name="srs_rviz_plugins/StringPanel" type="srs_rviz_plugins::StringPanel" base_class_type="rviz_common::Panel">
+    <description>string panel</description>
+  </class>
+</library>
