@@ -7,6 +7,7 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(rviz_common REQUIRED)
 find_package(rviz_rendering REQUIRED)
 
@@ -20,8 +21,11 @@ add_library(${PROJECT_NAME} SHARED
   src/string_panel/string_panel.cpp
   src/string_panel/string_panel_qt_if.cpp
   src/string_panel/string_panel_ros_if.cpp
+  # string display
+  src/string_display/string_display.cpp
 )
 ament_target_dependencies(${PROJECT_NAME} 
+  std_msgs
   rviz_common
   rviz_rendering
 )
