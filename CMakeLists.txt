@@ -20,7 +20,6 @@ add_library(${PROJECT_NAME} SHARED
   # string panel
   src/string_panel/string_panel.cpp
   src/string_panel/string_panel_qt_if.cpp
-  src/string_panel/string_panel_ros_if.cpp
   # string display
   src/string_display/string_display.cpp
 )

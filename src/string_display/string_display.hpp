@@ -43,14 +43,14 @@ namespace srs_rviz_plugins {
         Q_OBJECT
       public:
         StringDisplay();
-        virtual ~StringDisplay();
+        ~StringDisplay();
 
       protected:
-        virtual void onInitialize() override;
-        virtual void onEnable() override;
-        virtual void onDisable() override;
-        virtual void update(float wall_dt, float ros_dt) override;
-        virtual void reset() override;
+        void onInitialize() override;
+        void onEnable() override;
+        void onDisable() override;
+        void update(float wall_dt, float ros_dt) override;
+        void reset() override;
 
         rviz_common::properties::EnumProperty *hor_alignment_property_;
         rviz_common::properties::IntProperty *text_size_property_;

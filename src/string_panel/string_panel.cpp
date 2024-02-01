@@ -10,15 +10,22 @@
 namespace srs_rviz_plugins {
 StringPanel::StringPanel(QWidget *parent) : StringPanelQtIf(parent) {}
 
-void StringPanel::StartConnection(std::string topic_name) {
-  setNodePtr(getNodePtrFromRviz());
-  startRosConnetion(topic_name);
+void StringPanel::onInitialize() {
+  string_ros_handler_ = std::make_shared<StringRosHandler>(getNodePtrFromRviz());
+  updateTopicList(string_ros_handler_->getStringTopicList());
 }
 
-void StringPanel::EndConnection(void) { endRosConnetion(); }
+void StringPanel::onStartConnection(std::string topic_name) {
+  string_ros_handler_->startRosConnetion(topic_name);
+}
 
-void StringPanel::CommandFromUi(std::string content) {
-  sendRosCommand(content);
+void StringPanel::onEndConnection(void) {
+  string_ros_handler_->endRosConnetion(); 
+  updateTopicList(string_ros_handler_->getStringTopicList());
+}
+
+void StringPanel::onCommandMsg(std::string content) {
+  string_ros_handler_->sendRosCommand(content);
 }
 
 } // namespace srs_rviz_plugins

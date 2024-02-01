@@ -16,11 +16,12 @@ class StringPanelQtIf : public rviz_common::Panel {
 public:
   StringPanelQtIf(QWidget *parent = nullptr);
 
-  void onInitialize() override;
+  // void onInitialize() override;
   void load(const rviz_common::Config &config) override;
   void save(rviz_common::Config config) const override;
 
   rclcpp::Node::SharedPtr getNodePtrFromRviz(void);
+  void updateTopicList(const std::vector<std::string> topic_list);
 
 public Q_SLOTS:
   void onCheckChange(int state);
@@ -29,13 +30,13 @@ public Q_SLOTS:
   void onClickC();
 
 protected:
-  virtual void StartConnection(std::string topic_name) = 0;
-  virtual void EndConnection(void) = 0;
-  virtual void CommandFromUi(std::string content) = 0;
+  virtual void onStartConnection(std::string topic_name) = 0;
+  virtual void onEndConnection(void) = 0;
+  virtual void onCommandMsg(std::string content) = 0;
 
 private:
   QCheckBox *enable_check_;
-  QLineEdit *topic_edit_;
+  QComboBox* topic_combo_;
 
   QLineEdit *content_a_edit_;
   QLineEdit *content_b_edit_;
@@ -43,8 +44,6 @@ private:
   QPushButton *content_a_button_;
   QPushButton *content_b_button_;
   QPushButton *content_c_button_;
-
-  rclcpp::Node::SharedPtr nh_;
 };
 
 } // namespace srs_rviz_plugins

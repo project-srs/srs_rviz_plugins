@@ -111,10 +111,10 @@ public:
 
     if (data.horizontal_alignment == HorizontalAlignment::LEFT) {
       back_ground_panel_->setPosition(0, 0);
-      text_element_->setPosition(0, 0);
+      text_element_->setPosition(0, 1);
     } else { // right
       back_ground_panel_->setPosition(screen_width - panel_width, 0);
-      text_element_->setPosition(screen_width - panel_width, 0);
+      text_element_->setPosition(screen_width - panel_width, 1);
     }
     back_ground_panel_->setDimensions(panel_width, data.height);
 
@@ -179,7 +179,7 @@ private:
     text->setVerticalAlignment(Ogre::GuiVerticalAlignment::GVA_TOP);
     text->setHorizontalAlignment(Ogre::GuiHorizontalAlignment::GHA_LEFT);
     text->setColour(Ogre::ColourValue::White);
-    text->setFontName("Liberation Sans");
+    text->setFontName(font_name_);
     text->setCaption(content);
     text->setCharHeight(height);
     text->setPosition(x, y);
@@ -195,7 +195,7 @@ private:
   }
 
   static float getWidthRate(const std::string text) {
-    Ogre::FontPtr font = Ogre::FontManager::getSingleton().getByName("Liberation Sans", "rviz_rendering");
+    Ogre::FontPtr font = Ogre::FontManager::getSingleton().getByName(font_name_, "rviz_rendering");
     float width_rate = 0;
     for (auto c : text) {
       float ratio = 1.0f;
@@ -215,6 +215,7 @@ private:
   Ogre::TexturePtr texture_;
   Ogre::OverlayContainer * text_container_;
   Ogre::TextAreaOverlayElement* text_element_;
+  static constexpr char font_name_[] = "Liberation Sans";
 };
 
 } // namespace srs_rviz_plugins

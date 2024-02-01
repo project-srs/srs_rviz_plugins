@@ -12,11 +12,11 @@ StringPanelQtIf::StringPanelQtIf(QWidget *parent) : rviz_common::Panel(parent) {
   QVBoxLayout *layout = new QVBoxLayout;
 
   QHBoxLayout *layout_1st = new QHBoxLayout;
-  enable_check_ = new QCheckBox("Enable");
+  enable_check_ = new QCheckBox("Topic");
   layout_1st->addWidget(enable_check_);
-  layout_1st->addWidget(new QLabel("Topic:"));
-  topic_edit_ = new QLineEdit("");
-  layout_1st->addWidget(topic_edit_);
+  topic_combo_ = new QComboBox();
+  topic_combo_->setEditable(true);
+  layout_1st->addWidget(topic_combo_);
   layout->addLayout(layout_1st);
 
   QHBoxLayout *layout_2nd = new QHBoxLayout;
@@ -50,26 +50,55 @@ StringPanelQtIf::StringPanelQtIf(QWidget *parent) : rviz_common::Panel(parent) {
           &StringPanelQtIf::onClickB);
   connect(content_c_button_, &QPushButton::clicked, this,
           &StringPanelQtIf::onClickC);
-}
 
-void StringPanelQtIf::onInitialize() {
-  nh_ =
-      this->getDisplayContext()->getRosNodeAbstraction().lock()->get_raw_node();
+  content_a_button_->setEnabled(false);
+  content_b_button_->setEnabled(false);
+  content_c_button_->setEnabled(false);
 }
 
 void StringPanelQtIf::onCheckChange(int state) {
   if (state == Qt::Checked) {
-    std::string topic_name = topic_edit_->text().toStdString();
+    std::string topic_name = topic_combo_->currentText().toStdString();
     if (topic_name == "") {
       printf("topic name is_empty\n");
       return;
     }
 
-    StartConnection(topic_name);
-    topic_edit_->setEnabled(false);
+    onStartConnection(topic_name);
+    topic_combo_->setEnabled(false);
+    content_a_button_->setEnabled(true);
+    content_b_button_->setEnabled(true);
+    content_c_button_->setEnabled(true);
   } else {
-    EndConnection();
-    topic_edit_->setEnabled(true);
+    onEndConnection();
+    topic_combo_->setEnabled(true);
+    content_a_button_->setEnabled(false);
+    content_b_button_->setEnabled(false);
+    content_c_button_->setEnabled(false);
+  }
+}
+
+void StringPanelQtIf::updateTopicList(const std::vector<std::string> topic_list) {
+  std::string previous_topic_name = topic_combo_->currentText().toStdString();
+  topic_combo_->clear();
+  int same_topic_index = -1;
+  for (auto t : topic_list)
+  {
+    topic_combo_->addItem(t.c_str());
+    if (t == previous_topic_name)
+    {
+      same_topic_index = topic_combo_->count() - 1;
+    }
+  }
+
+  if (previous_topic_name != "")
+  {
+    if (same_topic_index < 0)
+    {
+      topic_combo_->addItem(previous_topic_name.c_str());
+      same_topic_index = topic_combo_->count() - 1;
+    }
+    topic_combo_->setCurrentIndex(same_topic_index);
   }
 }
 
@@ -80,7 +109,7 @@ void StringPanelQtIf::onClickA() {
   }
 
   std::string content = content_a_edit_->text().toStdString();
-  CommandFromUi(content);
+  onCommandMsg(content);
 }
 
 void StringPanelQtIf::onClickB() {
@@ -90,7 +119,7 @@ void StringPanelQtIf::onClickB() {
   }
 
   std::string content = content_b_edit_->text().toStdString();
-  CommandFromUi(content);
+  onCommandMsg(content);
 }
 
 void StringPanelQtIf::onClickC() {
@@ -100,12 +129,12 @@ void StringPanelQtIf::onClickC() {
   }
 
   std::string content = content_c_edit_->text().toStdString();
-  CommandFromUi(content);
+  onCommandMsg(content);
 }
 
 void StringPanelQtIf::save(rviz_common::Config config) const {
   rviz_common::Panel::save(config);
-  config.mapSetValue("BaseTopic", topic_edit_->text());
+  config.mapSetValue("BaseTopic", topic_combo_->currentText());
   config.mapSetValue("Checked", enable_check_->isChecked());
 
   config.mapSetValue("ContentA", content_a_edit_->text());
@@ -118,7 +147,7 @@ void StringPanelQtIf::load(const rviz_common::Config &config) {
   QString tmp_text;
   bool tmp_bool;
   if (config.mapGetString("BaseTopic", &tmp_text)) {
-    topic_edit_->setText(tmp_text);
+    topic_combo_->setCurrentText(tmp_text);
   }
   if (config.mapGetBool("Checked", &tmp_bool)) {
     enable_check_->setChecked(tmp_bool);
@@ -136,7 +165,7 @@ void StringPanelQtIf::load(const rviz_common::Config &config) {
 }
 
 rclcpp::Node::SharedPtr StringPanelQtIf::getNodePtrFromRviz(void) {
-  return nh_;
+  return this->getDisplayContext()->getRosNodeAbstraction().lock()->get_raw_node();
 }
 
 } // namespace srs_rviz_plugins

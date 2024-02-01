@@ -1,7 +1,7 @@
 #pragma once
 
 #include "string_panel_qt_if.hpp"
-#include "string_panel_ros_if.hpp"
+#include "string_ros_handler.hpp"
 
 #ifndef Q_MOC_RUN
 #include <QtWidgets>
@@ -14,16 +14,20 @@
 
 namespace srs_rviz_plugins {
 
-class StringPanel : public StringPanelQtIf, public StringPanelRosIf {
+class StringPanel : public StringPanelQtIf {
   Q_OBJECT
 public:
   StringPanel(QWidget *parent = nullptr);
+  // void updateTopicList(void);
 
-  void StartConnection(std::string topic_name) override;
+  // from Qt
+  void onInitialize() override;
+  void onStartConnection(std::string topic_name);
+  void onEndConnection(void);
+  void onCommandMsg(std::string content);
 
-  void EndConnection(void) override;
-
-  void CommandFromUi(std::string content) override;
+private:
+  std::shared_ptr<StringRosHandler> string_ros_handler_;
 };
 
 } // namespace srs_rviz_plugins

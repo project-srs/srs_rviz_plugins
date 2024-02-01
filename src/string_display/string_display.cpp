@@ -27,6 +27,7 @@ namespace srs_rviz_plugins {
         updateHorizontalAlignment();
         updateTextSize();
         current_text_data_.text = "None";
+        onEnable();
     }
 
     StringDisplay::~StringDisplay() {
@@ -54,7 +55,6 @@ namespace srs_rviz_plugins {
         (void)wall_dt;
         (void)ros_dt;
         if (current_text_data_ != last_text_data_) {
-            printf("update");
             overlay_text_ptr_->update(current_text_data_);
             last_text_data_ = current_text_data_;
         }
@@ -62,7 +62,7 @@ namespace srs_rviz_plugins {
 
     void StringDisplay::reset() {
         RTDClass::reset();
-        onDisable();
+        overlay_text_ptr_->update(current_text_data_);
     }
 
     void StringDisplay::processMessage(std_msgs::msg::String::ConstSharedPtr msg) {
