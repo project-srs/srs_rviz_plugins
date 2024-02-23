@@ -23,14 +23,14 @@ add_library(${PROJECT_NAME} SHARED
   # string display
   src/string_display/string_display.cpp
 )
-ament_target_dependencies(${PROJECT_NAME} 
+ament_target_dependencies(${PROJECT_NAME}
   std_msgs
   rviz_common
   rviz_rendering
 )
 install(TARGETS
   ${PROJECT_NAME}
-  EXPORT ${PROJECT_NAME}  
+  EXPORT ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
