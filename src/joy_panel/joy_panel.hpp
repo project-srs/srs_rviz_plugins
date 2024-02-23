@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <QtWidgets>
 #include <QComboBox>
@@ -15,10 +15,11 @@ namespace srs_rviz_plugins
 class JoyPanel : public rviz_common::Panel
 {
   Q_OBJECT
+
 public:
-  JoyPanel(QWidget* parent = nullptr);
+  JoyPanel(QWidget * parent = nullptr);
   void onInitialize() override;
-  void load(const rviz_common::Config& config) override;
+  void load(const rviz_common::Config & config) override;
   void save(rviz_common::Config config) const override;
 
 public Q_SLOTS:
@@ -30,14 +31,14 @@ public Q_SLOTS:
 
 private:
   void updateTopicList(void);
-  
+
   JoyHandler joy_handler_{};
-  QCheckBox* enable_check_;
-  QComboBox* topic_combo_;
-  TouchWidget* touch_;
-  QPushButton* a_button_;
-  QPushButton* b_button_;
-  QTimer* interval_timer_;
+  QCheckBox * enable_check_;
+  QComboBox * topic_combo_;
+  TouchWidget * touch_;
+  QPushButton * a_button_;
+  QPushButton * b_button_;
+  QTimer * interval_timer_;
   bool is_active_{false};
   bool a_clicked_{false};
   bool b_clicked_{false};

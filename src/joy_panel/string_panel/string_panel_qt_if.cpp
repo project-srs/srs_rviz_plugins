@@ -7,11 +7,14 @@
 #include <QPainter>
 #include <QSizePolicy>
 
-namespace srs_rviz_plugins {
-StringPanelQtIf::StringPanelQtIf(QWidget *parent) : rviz_common::Panel(parent) {
-  QVBoxLayout *layout = new QVBoxLayout;
+namespace srs_rviz_plugins
+{
+StringPanelQtIf::StringPanelQtIf(QWidget * parent)
+: rviz_common::Panel(parent)
+{
+  QVBoxLayout * layout = new QVBoxLayout;
 
-  QHBoxLayout *layout_1st = new QHBoxLayout;
+  QHBoxLayout * layout_1st = new QHBoxLayout;
   enable_check_ = new QCheckBox("Enable");
   layout_1st->addWidget(enable_check_);
   layout_1st->addWidget(new QLabel("Topic:"));
@@ -19,21 +22,21 @@ StringPanelQtIf::StringPanelQtIf(QWidget *parent) : rviz_common::Panel(parent) {
   layout_1st->addWidget(topic_edit_);
   layout->addLayout(layout_1st);
 
-  QHBoxLayout *layout_2nd = new QHBoxLayout;
+  QHBoxLayout * layout_2nd = new QHBoxLayout;
   content_a_edit_ = new QLineEdit("");
   content_a_button_ = new QPushButton("A");
   layout_2nd->addWidget(content_a_edit_);
   layout_2nd->addWidget(content_a_button_);
   layout->addLayout(layout_2nd);
 
-  QHBoxLayout *layout_3rd = new QHBoxLayout;
+  QHBoxLayout * layout_3rd = new QHBoxLayout;
   content_b_edit_ = new QLineEdit("");
   content_b_button_ = new QPushButton("B");
   layout_3rd->addWidget(content_b_edit_);
   layout_3rd->addWidget(content_b_button_);
   layout->addLayout(layout_3rd);
 
-  QHBoxLayout *layout_4th = new QHBoxLayout;
+  QHBoxLayout * layout_4th = new QHBoxLayout;
   content_c_edit_ = new QLineEdit("");
   content_c_button_ = new QPushButton("C");
   layout_4th->addWidget(content_c_edit_);
@@ -42,22 +45,28 @@ StringPanelQtIf::StringPanelQtIf(QWidget *parent) : rviz_common::Panel(parent) {
 
   setLayout(layout);
 
-  connect(enable_check_, &QCheckBox::stateChanged, this,
-          &StringPanelQtIf::onCheckChange);
-  connect(content_a_button_, &QPushButton::clicked, this,
-          &StringPanelQtIf::onClickA);
-  connect(content_b_button_, &QPushButton::clicked, this,
-          &StringPanelQtIf::onClickB);
-  connect(content_c_button_, &QPushButton::clicked, this,
-          &StringPanelQtIf::onClickC);
+  connect(
+    enable_check_, &QCheckBox::stateChanged, this,
+    &StringPanelQtIf::onCheckChange);
+  connect(
+    content_a_button_, &QPushButton::clicked, this,
+    &StringPanelQtIf::onClickA);
+  connect(
+    content_b_button_, &QPushButton::clicked, this,
+    &StringPanelQtIf::onClickB);
+  connect(
+    content_c_button_, &QPushButton::clicked, this,
+    &StringPanelQtIf::onClickC);
 }
 
-void StringPanelQtIf::onInitialize() {
+void StringPanelQtIf::onInitialize()
+{
   nh_ =
-      this->getDisplayContext()->getRosNodeAbstraction().lock()->get_raw_node();
+    this->getDisplayContext()->getRosNodeAbstraction().lock()->get_raw_node();
 }
 
-void StringPanelQtIf::onCheckChange(int state) {
+void StringPanelQtIf::onCheckChange(int state)
+{
   if (state == Qt::Checked) {
     std::string topic_name = topic_edit_->text().toStdString();
     if (topic_name == "") {
@@ -73,7 +82,8 @@ void StringPanelQtIf::onCheckChange(int state) {
   }
 }
 
-void StringPanelQtIf::onClickA() {
+void StringPanelQtIf::onClickA()
+{
   if (!enable_check_->isChecked()) {
     printf("no connection\n");
     return;
@@ -83,7 +93,8 @@ void StringPanelQtIf::onClickA() {
   CommandFromUi(content);
 }
 
-void StringPanelQtIf::onClickB() {
+void StringPanelQtIf::onClickB()
+{
   if (!enable_check_->isChecked()) {
     printf("no connection\n");
     return;
@@ -93,7 +104,8 @@ void StringPanelQtIf::onClickB() {
   CommandFromUi(content);
 }
 
-void StringPanelQtIf::onClickC() {
+void StringPanelQtIf::onClickC()
+{
   if (!enable_check_->isChecked()) {
     printf("no connection\n");
     return;
@@ -103,7 +115,8 @@ void StringPanelQtIf::onClickC() {
   CommandFromUi(content);
 }
 
-void StringPanelQtIf::save(rviz_common::Config config) const {
+void StringPanelQtIf::save(rviz_common::Config config) const
+{
   rviz_common::Panel::save(config);
   config.mapSetValue("BaseTopic", topic_edit_->text());
   config.mapSetValue("Checked", enable_check_->isChecked());
@@ -113,7 +126,8 @@ void StringPanelQtIf::save(rviz_common::Config config) const {
   config.mapSetValue("ContentC", content_c_edit_->text());
 }
 
-void StringPanelQtIf::load(const rviz_common::Config &config) {
+void StringPanelQtIf::load(const rviz_common::Config & config)
+{
   rviz_common::Panel::load(config);
   QString tmp_text;
   bool tmp_bool;
@@ -135,7 +149,8 @@ void StringPanelQtIf::load(const rviz_common::Config &config) {
   }
 }
 
-rclcpp::Node::SharedPtr StringPanelQtIf::getNodePtrFromRviz(void) {
+rclcpp::Node::SharedPtr StringPanelQtIf::getNodePtrFromRviz(void)
+{
   return nh_;
 }
 

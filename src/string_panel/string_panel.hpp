@@ -12,12 +12,15 @@
 #include <geometry_msgs/msg/twist_stamped.hpp>
 #include <sensor_msgs/msg/joy.hpp>
 
-namespace srs_rviz_plugins {
+namespace srs_rviz_plugins
+{
 
-class StringPanel : public StringPanelQtIf {
+class StringPanel : public StringPanelQtIf
+{
   Q_OBJECT
+
 public:
-  StringPanel(QWidget *parent = nullptr);
+  StringPanel(QWidget * parent = nullptr);
   // void updateTopicList(void);
 
   // from Qt

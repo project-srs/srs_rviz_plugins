@@ -3,9 +3,11 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
-namespace srs_rviz_plugins {
+namespace srs_rviz_plugins
+{
 
-class StringPanelRosIf {
+class StringPanelRosIf
+{
 public:
   StringPanelRosIf(void);
   void setNodePtr(rclcpp::Node::SharedPtr nh);

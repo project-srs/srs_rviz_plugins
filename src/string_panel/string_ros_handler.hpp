@@ -3,24 +3,30 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
-namespace srs_rviz_plugins {
+namespace srs_rviz_plugins
+{
 
-class StringRosHandler {
+class StringRosHandler
+{
 public:
-  StringRosHandler(const rclcpp::Node::SharedPtr& node) {
+  StringRosHandler(const rclcpp::Node::SharedPtr & node)
+  {
     node_ = node;
   }
 
-  void startRosConnetion(const std::string& topic_name) {
+  void startRosConnetion(const std::string & topic_name)
+  {
     string_publisher_ =
       node_->create_publisher<std_msgs::msg::String>(topic_name, rclcpp::QoS(10));
   }
 
-  void endRosConnetion(void) {
+  void endRosConnetion(void)
+  {
     string_publisher_.reset();
   }
 
-  void sendRosCommand(const std::string& content) {
+  void sendRosCommand(const std::string & content)
+  {
     if (string_publisher_) {
       std_msgs::msg::String msg;
       msg.data = content;
@@ -28,12 +34,14 @@ public:
     }
   }
 
-  std::vector<std::string> getStringTopicList(void) const {
+  std::vector<std::string> getStringTopicList(void) const
+  {
     return getTopicList("std_msgs/msg/String");
   }
 
 private:
-  std::vector<std::string> getTopicList(const std::string type_name) const {
+  std::vector<std::string> getTopicList(const std::string type_name) const
+  {
     std::map<std::string, std::vector<std::string>> topic_map = node_->get_topic_names_and_types();
 
     std::vector<std::string> output;

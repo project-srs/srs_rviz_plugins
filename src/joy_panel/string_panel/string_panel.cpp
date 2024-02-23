@@ -7,17 +7,21 @@
 #include <QPainter>
 #include <QSizePolicy>
 
-namespace srs_rviz_plugins {
-StringPanel::StringPanel(QWidget *parent) : StringPanelQtIf(parent) {}
+namespace srs_rviz_plugins
+{
+StringPanel::StringPanel(QWidget * parent)
+: StringPanelQtIf(parent) {}
 
-void StringPanel::StartConnection(std::string topic_name) {
+void StringPanel::StartConnection(std::string topic_name)
+{
   setNodePtr(getNodePtrFromRviz());
   startRosConnetion(topic_name);
 }
 
-void StringPanel::EndConnection(void) { endRosConnetion(); }
+void StringPanel::EndConnection(void) {endRosConnetion();}
 
-void StringPanel::CommandFromUi(std::string content) {
+void StringPanel::CommandFromUi(std::string content)
+{
   sendRosCommand(content);
 }
 

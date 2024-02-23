@@ -9,15 +9,18 @@
 #include <geometry_msgs/msg/twist_stamped.hpp>
 #include <sensor_msgs/msg/joy.hpp>
 
-namespace srs_rviz_plugins {
+namespace srs_rviz_plugins
+{
 
-class StringPanelQtIf : public rviz_common::Panel {
+class StringPanelQtIf : public rviz_common::Panel
+{
   Q_OBJECT
+
 public:
-  StringPanelQtIf(QWidget *parent = nullptr);
+  StringPanelQtIf(QWidget * parent = nullptr);
 
   // void onInitialize() override;
-  void load(const rviz_common::Config &config) override;
+  void load(const rviz_common::Config & config) override;
   void save(rviz_common::Config config) const override;
 
   rclcpp::Node::SharedPtr getNodePtrFromRviz(void);
@@ -35,15 +38,15 @@ protected:
   virtual void onCommandMsg(std::string content) = 0;
 
 private:
-  QCheckBox *enable_check_;
-  QComboBox* topic_combo_;
+  QCheckBox * enable_check_;
+  QComboBox * topic_combo_;
 
-  QLineEdit *content_a_edit_;
-  QLineEdit *content_b_edit_;
-  QLineEdit *content_c_edit_;
-  QPushButton *content_a_button_;
-  QPushButton *content_b_button_;
-  QPushButton *content_c_button_;
+  QLineEdit * content_a_edit_;
+  QLineEdit * content_b_edit_;
+  QLineEdit * content_c_edit_;
+  QPushButton * content_a_button_;
+  QPushButton * content_b_button_;
+  QPushButton * content_c_button_;
 };
 
 } // namespace srs_rviz_plugins
