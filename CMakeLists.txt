@@ -10,6 +10,7 @@ find_package(ament_cmake REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rviz_common REQUIRED)
 find_package(rviz_rendering REQUIRED)
+find_package(cv_bridge REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 
@@ -24,11 +25,14 @@ add_library(${PROJECT_NAME} SHARED
   src/string_display/string_display.cpp
   # color_display
   src/color_display/color_display.cpp
+  # image_quad_display
+  src/image_quad_display/image_quad_display.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}
   std_msgs
   rviz_common
   rviz_rendering
+  cv_bridge
 )
 install(TARGETS
   ${PROJECT_NAME}

@@ -13,4 +13,8 @@
     <description>Color Display plugin for the 3D view.</description>
     <message_type>std_msgs/msg/ColorRGBA</message_type>
   </class>
+  <class name="srs_rviz_plugins/ImageQuadDisplay" type="srs_rviz_plugins::ImageQuadDisplay" base_class_type="rviz_common::Display">
+    <description>Image Display plugin for the 3D view.</description>
+    <message_type>sensor_msgs/msg/Image</message_type>
+  </class>
 </library>

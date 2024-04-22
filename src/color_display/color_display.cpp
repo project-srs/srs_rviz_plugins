@@ -100,7 +100,7 @@ void ColorDisplay::processMessage(std_msgs::msg::ColorRGBA::ConstSharedPtr msg)
   current_msg_opt_ = *msg; 
 }
 
-} // namespace rviz_2d_overlay_plugins
+} // namespace srs_rviz_plugins
 
 #include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(srs_rviz_plugins::ColorDisplay, rviz_common::Display)
