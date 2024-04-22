@@ -22,6 +22,8 @@ add_library(${PROJECT_NAME} SHARED
   src/string_panel/string_panel_qt_if.cpp
   # string display
   src/string_display/string_display.cpp
+  # color_display
+  src/color_display/color_display.cpp
 )
 ament_target_dependencies(${PROJECT_NAME}
   std_msgs

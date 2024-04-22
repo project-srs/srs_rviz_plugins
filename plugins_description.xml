@@ -5,9 +5,12 @@
   <class name="srs_rviz_plugins/StringPanel" type="srs_rviz_plugins::StringPanel" base_class_type="rviz_common::Panel">
     <description>string panel</description>
   </class>
-
-    <class name="srs_rviz_plugins/StringDisplay" type="srs_rviz_plugins::StringDisplay" base_class_type="rviz_common::Display">
-        <description>Text overlay plugin for the 3D view.</description>
-        <message_type>std_msgs/msg/String</message_type>
-    </class>
+  <class name="srs_rviz_plugins/StringDisplay" type="srs_rviz_plugins::StringDisplay" base_class_type="rviz_common::Display">
+    <description>Text overlay plugin for the 3D view.</description>
+    <message_type>std_msgs/msg/String</message_type>
+  </class>
+  <class name="srs_rviz_plugins/ColorDisplay" type="srs_rviz_plugins::ColorDisplay" base_class_type="rviz_common::Display">
+    <description>Color Display plugin for the 3D view.</description>
+    <message_type>std_msgs/msg/ColorRGBA</message_type>
+  </class>
 </library>
