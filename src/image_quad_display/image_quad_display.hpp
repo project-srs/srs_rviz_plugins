@@ -8,6 +8,41 @@
 
 namespace srs_rviz_plugins {
 
+struct QuadProperty {
+  float width{0.5f};
+  float height{0.5f};
+  Ogre::Vector3 offset{Ogre::Vector3::ZERO};
+  Ogre::Quaternion rotation{Ogre::Quaternion::IDENTITY};
+
+  bool operator==(const QuadProperty & other)
+  {
+    return (width == other.width && 
+      height == other.height &&
+      offset == other.offset &&
+      rotation == other.rotation);
+  }
+
+  bool operator!=(const QuadProperty & other)
+  {
+    return !(*this == other);
+  }
+};
+
+struct OgrePose {
+  Ogre::Vector3 position{};
+  Ogre::Quaternion orientation{};
+
+  bool operator==(const OgrePose & other)
+  {
+    return position == other.position && orientation == other.orientation;
+  }
+
+  bool operator!=(const OgrePose & other)
+  {
+    return !(*this == other);
+  }
+};
+
 class ImageQuadDisplay
     : public rviz_common::MessageFilterDisplay<sensor_msgs::msg::Image> {
 
@@ -32,10 +67,19 @@ private:
   Ogre::TexturePtr texture_;
   Ogre::MaterialPtr material_;
 
+  // properties
   rviz_common::properties::FloatProperty * width_size_property_;
   rviz_common::properties::FloatProperty * height_size_property_;
   rviz_common::properties::VectorProperty * offset_property_;
   rviz_common::properties::QuaternionProperty * rotation_property_; 
+  std::optional<QuadProperty> last_property_;
+
+  // msg
+  std::optional<sensor_msgs::msg::Image> current_msg_opt_;
+  std::optional<sensor_msgs::msg::Image> last_msg_opt_;
+  
+  // tf pose
+  std::optional<OgrePose> last_base_frame_pose_;
 };
 
 } // namespace srs_rviz_plugins
