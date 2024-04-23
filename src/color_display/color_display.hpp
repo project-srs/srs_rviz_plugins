@@ -14,15 +14,13 @@ namespace srs_rviz_plugins
 {
 
 struct SphereProperty {
-  bool enable{false};
   float radius{0.2f};
   std::string frame_id{"map"};
   Ogre::Vector3 offset{};
 
   bool operator==(const SphereProperty & other)
   {
-    return (enable == other.enable && 
-      radius == other.radius &&
+    return (radius == other.radius &&
       frame_id == other.frame_id &&
       offset == other.offset);
   }

@@ -29,11 +29,17 @@ StringDisplay::~StringDisplay()
 void StringDisplay::onEnable()
 {
   current_text_data_.visible = true;
+  if (overlay_text_ptr_) {
+    overlay_text_ptr_->update(current_text_data_);
+  }
 }
 
 void StringDisplay::onDisable()
 {
   current_text_data_.visible = false;
+  if (overlay_text_ptr_) {
+    overlay_text_ptr_->update(current_text_data_);
+  }
 }
 
 void StringDisplay::onInitialize()

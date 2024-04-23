@@ -54,7 +54,6 @@ void ColorDisplay::update(float wall_dt, float ros_dt)
   const bool msg_updated = !last_msg_opt_.has_value() || current_msg_opt_.value() != last_msg_opt_.value();
 
   SphereProperty current_sphere_property;
-  current_sphere_property.enable = isEnabled();
   current_sphere_property.radius = radius_property_->	getFloat();
   current_sphere_property.frame_id = tf_frame_property_->getFrameStd();
   current_sphere_property.offset = offset_property_->getVector();
@@ -69,20 +68,15 @@ void ColorDisplay::update(float wall_dt, float ros_dt)
   const bool pose_updated = !last_base_frame_pose_.has_value() || current_base_frame_pose != last_base_frame_pose_.value();
 
   if (msg_updated || property_updated || pose_updated) {
-    if (current_sphere_property.enable) {
-      frame_node_->setPosition(current_base_frame_pose.position);
-      frame_node_->setOrientation(current_base_frame_pose.orientation);
+    frame_node_->setPosition(current_base_frame_pose.position);
+    frame_node_->setOrientation(current_base_frame_pose.orientation);
 
-      const auto color = current_msg_opt_.value();
-      vis_shape_shere_->setColor(color.r, color.g, color.b, color.a);
+    const auto color = current_msg_opt_.value();
+    vis_shape_shere_->setColor(color.r, color.g, color.b, color.a);
 
-      Ogre::Vector3 radius_scale{current_sphere_property.radius, current_sphere_property.radius, current_sphere_property.radius};
-      vis_shape_shere_->setScale(radius_scale); // set invisible
-      vis_shape_shere_->setPosition(current_sphere_property.offset);
-    } else {
-      Ogre::Vector3 zero_scale{0.0f, 0.0f, 0.0f};
-      vis_shape_shere_->setScale(zero_scale); // set invisible
-    }
+    Ogre::Vector3 radius_scale{current_sphere_property.radius, current_sphere_property.radius, current_sphere_property.radius};
+    vis_shape_shere_->setScale(radius_scale); // set invisible
+    vis_shape_shere_->setPosition(current_sphere_property.offset);
 
     last_msg_opt_ = current_msg_opt_;
     last_sphere_property_ = current_sphere_property;
