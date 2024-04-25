@@ -101,7 +101,7 @@ void ImageQuadDisplay::update(float wall_dt, float ros_dt)
 
   // check tf
   OgrePose current_base_frame_pose;
-  if (!context_->getFrameManager()->getTransform(current_msg_opt_.value().header.frame_id, current_msg_opt_.value().header.stamp, current_base_frame_pose.position, current_base_frame_pose.orientation)){
+  if (!context_->getFrameManager()->getTransform(current_msg_opt_.value().header.frame_id, current_base_frame_pose.position, current_base_frame_pose.orientation)){
     setStatus(rviz_common::properties::StatusProperty::Level::Warn, QString("tf"), QString("not found"));
     return;
   }
