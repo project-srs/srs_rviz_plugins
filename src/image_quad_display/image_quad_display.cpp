@@ -109,8 +109,6 @@ void ImageQuadDisplay::update(float wall_dt, float ros_dt)
   const bool pose_updated = !last_base_frame_pose_.has_value() || current_base_frame_pose != last_base_frame_pose_.value();
 
   if (property_updated || pose_updated) {
-    printf("update quad\n");
-
     scene_node_->setPosition(current_base_frame_pose.position);
     scene_node_->setOrientation(current_base_frame_pose.orientation);
 
