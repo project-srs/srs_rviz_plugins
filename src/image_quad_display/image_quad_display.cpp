@@ -38,6 +38,12 @@ void ImageQuadDisplay::onInitialize()
   image_object_ = scene_manager_->createManualObject();
   image_object_->setDynamic(true);
   frame_node_->attachObject(image_object_);
+
+  static int counter = 0;
+  counter++;
+  counter_ = counter;
+
+  std::cout << "ImageQuadDisplay" << counter_ << std::endl;
   MFDClass::onInitialize();
 }
 
@@ -58,11 +64,16 @@ void ImageQuadDisplay::update(float wall_dt, float ros_dt)
   bool texture_size_updated = (texture_ == nullptr) || (texture_->getWidth() != current_msg_opt_.value().width || texture_->getHeight() != current_msg_opt_.value().height);
   if (texture_size_updated) {
     printf("new texture\n");
-    texture_ = createTexture("srs_rviz_plugins_image_quad_texture_0", current_msg_opt_.value().width, current_msg_opt_.value().height);
+
+    std::stringstream texture_ss;
+    texture_ss << "srs_rviz_plugins_image_quad_texture_" << counter_;
+    texture_ = createTexture(texture_ss.str(), current_msg_opt_.value().width, current_msg_opt_.value().height);
 
     if (material_ == nullptr) {
       printf("new material\n");
-      material_ = createMaterial("srs_rviz_plugins_image_quad_material_0", texture_->getName());
+      std::stringstream material_ss;
+      material_ss << "srs_rviz_plugins_image_quad_material_" << counter_;
+      material_ = createMaterial(material_ss.str(), texture_->getName());
     }
   }
 

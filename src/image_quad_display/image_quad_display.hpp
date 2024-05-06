@@ -80,6 +80,9 @@ private:
   
   // tf pose
   std::optional<OgrePose> last_base_frame_pose_;
+
+  // counter
+  int counter_;
 };
 
 } // namespace srs_rviz_plugins
